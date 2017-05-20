@@ -1,8 +1,6 @@
 var app = angular.module('ticapp',[ "ngSanitize","ngAnimate","ui.router","ui.bootstrap",'angularFileUpload']);
 
-server = "http://10.116.132.20:8080/veeterbee/";
-// server = "http://localhost:8080/veeterbee/";
-// server = "http://192.168.1.86:8080/veeterbee/";
+server = "./quote-api/public";
 
 moment().format("D, MMM YYYY");
 app.constant("moment", moment);
