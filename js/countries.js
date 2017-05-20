@@ -58,28 +58,17 @@ app.service("Airports", ["$http", function($http){
 		return finalList;
 	}
 
-	$http.get(server+"airports/allorigin").then(function(response){
+	$http.get(server+"airports").then(function(response){
 
 		if(response.status == 200)
 		{	
-			angular.copy([],originCountries);
-			angular.copy(uniqueCountryList(response.data), originCountries);
+			console.log(response);
 
-			angular.copy([],originAirports);
-			angular.copy(response.data, originAirports);
-		}
-		else{}
-	});
+			// angular.copy([],originCountries);
+			// angular.copy(uniqueCountryList(response.data), originCountries);
 
-	$http.get(server+"airports/alldestination").then(function(response){
-
-		if(response.status == 200)
-		{	
-			angular.copy([],destinationCountries);
-			angular.copy(uniqueCountryList(response.data), destinationCountries);
-
-			angular.copy([],destinationAirports);
-			angular.copy(response.data, destinationAirports);
+			// angular.copy([],originAirports);
+			// angular.copy(response.data, originAirports);
 		}
 		else{}
 	});

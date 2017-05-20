@@ -1,6 +1,7 @@
 var app = angular.module('ticapp',[ "ngSanitize","ngAnimate","ui.router","ui.bootstrap",'angularFileUpload']);
 
-server = "./quote-api/public";
+server = "http://jt-demo-webapp.azurewebsites.net/quote-api/public/";
+//server = "./quote-api/public";
 
 moment().format("D, MMM YYYY");
 app.constant("moment", moment);
