@@ -1,0 +1,220 @@
+*::-webkit-scrollbar {
+	width: 6px !important;
+	height: 6px !important;
+}
+ 
+*::-webkit-scrollbar-track {
+	background: rgba(255,255,255,0.08);
+}
+ 
+*::-webkit-scrollbar-thumb {
+	background-color: rgba(0,0,0,0.2);
+}
+
+[ng-click],
+[data-ng-click],
+[x-ng-click] {
+    cursor: pointer;
+}
+
+h4
+{
+	font-weight: 500;
+}
+
+td input
+{
+	width: 100%;
+	text-align: center;
+}
+
+.sidebar
+{
+	background-color: #A31635;
+	height: 100%;
+
+	border-top: 1px solid #DDD;
+	border-right: none;
+}
+
+.sidebar-nav
+{
+	list-style: none;
+}
+
+.sidebar-nav .sidebar-nav-item
+{
+	padding: 15px 0px;
+
+	font-size: 18px;
+	font-color: ;
+}
+
+.sidebar-nav .sidebar-nav-item
+{
+
+}
+
+.app-header
+{
+	height: 78.5px;
+	max-height: 78.5px;
+}
+
+.list-group-component
+{
+	overflow: hidden;
+	height: -webkit-calc(100% - 78.5px - 51px);	
+
+	border: 1px solid #ddd;
+	border-top:none;
+}
+
+.list-group-wrapper
+{	
+	overflow: auto;
+	height: 100%; 
+
+	border-top: none;
+	border-bottom: none;
+}
+
+.view-control-bar
+{
+/*	padding: 8px 0px;	*/
+	background-color: #FFF;
+	border: 1px solid #ddd;	
+}
+
+.view-control-bar-component
+{
+	border-right: 1px solid #ddd;
+}
+
+.view-control-search-input, .view-control-button
+{
+	font-family: FontAwesome, sans-serif;
+	font-style: normal;
+	transition: all 0.1s;
+}
+
+.view-control-search-input
+{
+	margin: 8px -10px;
+}
+
+.view-control-search-input, .view-control-search-input:focus, .view-control-search-input:active, .view-control-bar-component .form-control
+{
+	border: none;
+	box-shadow: none;
+}
+
+.view-control-search-input-wrapper:hover, .view-control-search-input-wrapper:active
+{
+	cursor: default !important;
+	background-color: #fff !important;
+}
+
+.view-control-button
+{
+	margin: 8px 0px;
+	color:#DDD;
+}
+
+.view-control-bar-component:hover, .view-control-bar-component:hover .view-control-button, .view-control-bar .active:hover
+{
+	cursor: pointer;
+	background-color: #EEE;
+	color:#888;
+
+	transition: all 0.1s;
+}
+
+.view-control-bar .active, .active .view-control-button 
+{
+	color: #FFF;
+	background-color: #a31635;
+}
+
+.view-control-bar-component, .view-control-bar-component .view-control-button, .view-control-bar .active
+{
+	transition: all 0.1s;
+}
+
+.view-control-bar-button
+{
+	line-height: 19.6px;
+}
+
+.list-group-item
+{
+	border: none;
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 1px;
+
+	transition: all 0.1s;
+}
+
+.list-group-item:hover, .list-group-item:hover .list-group-item-heading, .list-group-item:hover .list-group-item-text,
+.list-group-item-active, .list-group-item-active .list-group-item-heading, .list-group-item-active .list-group-item-text 
+{
+	cursor: pointer;
+	background-color: #2aafc8;
+	color: #FFF;
+
+	transition: all 0.1s;
+}
+
+.main-content-wrapper
+{
+	overflow: hidden;
+
+	background-color: RGB(245,245,245);
+	border: 1px solid #ddd;
+	border-left: none;
+}
+
+.scrollable-column
+{
+	overflow: auto;
+
+	border-top: none;
+	border-bottom: none;
+}
+
+.content-wrapper, .list-group-component , .scrollable-column
+{
+	height: -webkit-calc(100% - 78.5px - 51px);	
+}
+
+.panel
+{
+	margin-top: 30px;
+}
+
+.panel-primary > .panel-heading > h4, .panel-warning > .panel-heading > h4
+{
+	color: #FFF;
+}
+
+.panel-wrapper
+{
+	position: relative;
+	margin-bottom: 35px;
+}
+
+.panel-heading
+{
+	display: table-cell;
+	position: absolute;
+
+	left:15px;
+	top: -20px;
+	padding: 5px 15px;
+
+}
+
+.panel-body
+{
+	margin-top: 30px;
+}
