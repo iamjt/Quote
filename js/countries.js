@@ -38,8 +38,8 @@ app.service("Airports", ["$http", function($http){
 		for(var i=0; i<myList.length; i++)
 		{	
 			tempItem = myList[i];
-			tempCode.push(tempItem.countryCode);
-			tempCountry.push(tempItem.countryName);
+			tempCode.push(tempItem.ISOCode);
+			tempCountry.push(tempItem.Country);
 		}
 
 		var finalCodeList = Array.from(new Set(tempCode));
@@ -62,13 +62,20 @@ app.service("Airports", ["$http", function($http){
 
 		if(response.status == 200)
 		{	
-			console.log(response);
+			angular.copy([],originCountries);
+			angular.copy(uniqueCountryList(response.data.originAirports), originCountries);
 
-			// angular.copy([],originCountries);
-			// angular.copy(uniqueCountryList(response.data), originCountries);
+			angular.copy([],originAirports);
+			angular.copy(response.data.originAirports, originAirports);
 
-			// angular.copy([],originAirports);
-			// angular.copy(response.data, originAirports);
+
+			console.log(originAirports);
+
+			angular.copy([],destinationCountries);
+			angular.copy(uniqueCountryList(response.data.destinationAirports), destinationCountries);
+
+			angular.copy([],destinationAirports);
+			angular.copy(response.data.destinationAirports, destinationAirports);
 		}
 		else{}
 	});

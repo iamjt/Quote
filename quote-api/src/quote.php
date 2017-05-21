@@ -5,6 +5,7 @@
 		$stmt = $connection -> prepare("SELECT `RouteID`, `Airline`, `TransitAirportCode`, `AgentCode` FROM `routes` WHERE `OriginAirportCode` = ? AND `DestinationAirportCode` = ? ORDER BY `Airline` ASC");
 
 		$quoteStmt = $connection -> prepare("SELECT * FROM `quotes` WHERE `RouteID` = ? ORDER BY `Serial`");
+		$airlineStmt = $connection -> prepare("SELECT `AirlineName` FROM `airlines` WHERE `IATADesignator` = ?");
 
 		if(!$stmt)
 		{
@@ -41,14 +42,27 @@
 					$routeQuotes[$quoteTable['Commodity']][] = getQuote($quoteTable,$weight);
 				}
 
+				$quoteStmt -> free_result();
+
 				$route["quotes"] = $routeQuotes;
 
 
 				if(!isset($output[$route['Airline']]))
 				{
 					$airlineObject = array ();
+
+					$airlineStmt->bind_param("s", $route['Airline']);
+					$airlineStmt->execute();
+
+					$airlineResult = $airlineStmt -> get_result();
+
+					while($airlineQuery = $airlineResult -> fetch_assoc())
+					{
+						$airlineObject["name"] = $airlineQuery['AirlineName'];
+					}
+
 					$airlineObject['direct'] = array ();
-					$output[$route['Airline']] = $airlineObject;
+					$output[$route['Airline']] = $airlineObject;		
 				}
 
 				if($route['TransitAirportCode'] == '0')
@@ -60,6 +74,7 @@
 					if(!isset($output[$route['Airline']][$route['TransitAirportCode']]))
 					{
 						$output[$route['Airline']][$route['TransitAirportCode']]['details'] = getAirportDetailsByCode($connection,$route['TransitAirportCode']);
+
 						$output[$route['Airline']][$route['TransitAirportCode']]['choices'] = array ();
 					}
 
@@ -128,5 +143,32 @@
 			$cost = $minimum;
 							
 		return $cost;
+	}
+
+	function getAgentList($connection, $origin, $destination)
+	{
+		$stmt = $connection -> prepare("SELECT DISTINCT `AgentCode` FROM `routes` WHERE `OriginAirportCode` = ? AND `DestinationAirportCode` = ? ORDER BY `Airline` ASC");
+
+		if(!$stmt)
+		{
+			printf("Error: Unable to prepare statement");
+		    exit();
+		}
+
+		$stmt->bind_param("ss", $origin, $destination);
+		$stmt->execute();
+		$result = $stmt->get_result();
+
+		$output = array();
+
+		if($result)
+		{
+			while($agent = $result->fetch_assoc())
+			{
+				$output[] = $agent;
+			}
+		}
+
+		return $output;
 	}
 ?>

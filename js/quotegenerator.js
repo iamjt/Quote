@@ -180,7 +180,7 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 		return airports.filter(function(airport){
 
 			viewValue = viewValue.toUpperCase();
-			return ((airport.airportCode.toUpperCase().startsWith(viewValue))||(airport.airportName.toUpperCase().indexOf(viewValue) != -1));
+			return ((airport.IATACode.toUpperCase().startsWith(viewValue))||(airport.AirportName.toUpperCase().indexOf(viewValue) != -1));
 		});
 	}
 
@@ -238,41 +238,32 @@ app.service("QuoteService",["Airports","$http", "$q", function(Airports, $http, 
 			load:loadParameters
 		}
 
-		var airlineListPromise = $http.post(server+"routes/", JSON.stringify(data));
+		var airlineListPromise = $http.post(server+"route-operators/", JSON.stringify(data));
 
 		airlineListPromise.then(function(response){
+
 			angular.copy({}, origin);
 			angular.copy({}, destination);
 			angular.copy([], quotelist);
-			angular.copy([], airlineList);
 			angular.copy([], agentList);
 			
+			console.log(response.data);
+
 			angular.copy(response.data.origin, origin);
 			angular.copy(response.data.destination, destination);
-			angular.copy(response.data.quotes, quotelist);
-			var myQuote;
+			angular.copy(response.data.operators, quotelist);
 
-			console.log(quotelist[0]);
+			var myQuote;
 
 			for(var i=0; i<quotelist.length; i++)
 			{
 				myQuote = quotelist[i]
 
-				if(myQuote.airlineName&&!airlineList.includes(myQuote.airlineName))
-				{
-					airlineList.push(myQuote.airlineName);
-				}
-
-				if(myQuote.agentCode&&!agentList.includes(myQuote.agentCode)&&(myQuote.agentCode!=0))
-				{
-					agentList.push(myQuote.agentCode)
-				}
+				// if(myQuote.agentCode&&!agentList.includes(myQuote.agentCode)&&(myQuote.agentCode!=0))
+				// {
+				// 	agentList.push(myQuote.agentCode)
+				// }
 			}	
-
-			console.log(agentList);
-
-
-
 
 			//saveQuote(originCode, destinationCode, loadParameters, quotes);
 		})

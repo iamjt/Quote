@@ -63,18 +63,13 @@ $app->get('/airports', function($request, $response, $args) {
 //Requires the load object defined as
 //{origin airport code, destination airport code, quantity, weight, length, width, height}
 //Produces a json array
-$app->get('/route-operators/[{route}]', function($request, $response, $args) {
+$app->post('/route-operators/', function($request, $response, $args) {
 	
-	if(!isset($args['route']))
-	{
-		return $this->renderer->render($response, '403.phtml', $args);
-	};
+	$origin = $request->getParsedBody()['origin'];
+	$destination = $request->getParsedBody()['destination'];
 
-	$givenRoute = explode("-",$args["route"]);
-
-	$origin = $givenRoute[0];
-	$destination = $givenRoute[1];
-	$weight = 1;
+	$load = $request->getParsedBody()['load'];
+	$weight = $load['volumeWeight'] > $load['weight']?$load['volumeWeight']:$load['weight'];
 
 	$connection = connectToDB();
 

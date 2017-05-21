@@ -27,13 +27,13 @@
 				<div class="origin-wrapper">
 					<h2>Origin</h2>
 					<div class="form-group">
-						<input class="form-control" ng-model="originAirport" uib-typeahead="originAirportObject as originAirportObject.displayName for originAirportObject in filterByAirport(originAirportList, $viewValue, true) | limitTo:5"/>
+						<input class="form-control" ng-model="originAirport" uib-typeahead="originAirportObject as originAirportObject.DisplayName for originAirportObject in filterByAirport(originAirportList, $viewValue, true) | limitTo:5"/>
 					</div>
 				</div>
 				<div class="destination-wrapper">
 					<h2>Destination</h2>
 					<div class="form-group">
-						<input class="form-control" ng-model="destinationAirport" uib-typeahead="destinationAirportObject as destinationAirportObject.displayName for destinationAirportObject in filterByAirport(destinationAirportList, $viewValue, false) | limitTo:5"/>
+						<input class="form-control" ng-model="destinationAirport" uib-typeahead="destinationAirportObject as destinationAirportObject.DisplayName for destinationAirportObject in filterByAirport(destinationAirportList, $viewValue, false) | limitTo:5"/>
 						<label class="control-label">{{}}</label>
 					</div>
 				</div>
