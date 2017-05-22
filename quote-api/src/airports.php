@@ -1,11 +1,11 @@
 <?php
 	
-	function getAirport($connection, $isOrigin)
+	function getAirports($connection, $isOrigin)
 	{
 		if($isOrigin)
-			$stmt = $connection -> prepare("SELECT DISTINCT `OriginAirportCode` FROM `routes`");
+			$stmt = $connection -> prepare("SELECT * FROM `airport` WHERE `IATACode` IN (SELECT DISTINCT `OriginAirportCode` FROM `routes`)");
 		else
-			$stmt = $connection -> prepare("SELECT DISTINCT `DestinationAirportCode` FROM `routes`");
+			$stmt = $connection -> prepare("SELECT * FROM `airport` WHERE `IATACode` IN (SELECT DISTINCT `DestinationAirportCode` FROM `routes`)");
 
 		if(!$stmt)
 		{
@@ -14,14 +14,26 @@
 		}
 
 		$stmt->execute();
-		$stmt->store_result();
-		$stmt->bind_result($airportCode);
+		$result = $stmt->get_result();
 
 		$output = array();
 
-		while($stmt->fetch())
+		while($airport = $result->fetch_assoc())
 		{
-			$output [] = $airportCode;
+			if($airport["City"] == "Singapore")
+			{
+				$airport["DisplayName"] = "Singapore - ".$airport["IATACode"];
+			}
+			else if($airport["City"] == $airport["Country"])
+			{
+				$airport["DisplayName"] = $airport["City"]." (".$airport["AirportName"]." - ".$airport["IATACode"].")";	
+			}
+			else
+			{
+				$airport["DisplayName"] = $airport["City"].", ".$airport["Country"]." (".$airport["AirportName"]." - ".$airport["IATACode"].")";	
+			}
+
+			$output [] = $airport;
 		}
 
 		return $output;
@@ -71,7 +83,7 @@
 
 	function getAirportListByCodes($connection, $airportIDList)
 	{
-		$stmt = $connection -> prepare("SELECT `AirportName`, `City`, `Country` from `airport` WHERE `IATACode` = ?");
+		$stmt = $connection -> prepare("SELECT * from `airport` WHERE `IATACode` = ?");
 
 		if(!$stmt)
 		{
@@ -98,15 +110,15 @@
 				{
 					if($airport["City"] == "Singapore")
 					{
-						$airport["DisplayName"] = "Singapore - ".$airportID;
+						$airport["DisplayName"] = "Singapore - ".$airport["IATACode"];
 					}
 					else if($airport["City"] == $airport["Country"])
 					{
-						$airport["DisplayName"] = $airport["City"]." (".$airport["AirportName"]." - ".$airportID.")";	
+						$airport["DisplayName"] = $airport["City"]." (".$airport["AirportName"]." - ".$airport["IATACode"].")";	
 					}
 					else
 					{
-						$airport["DisplayName"] = $airport["City"].", ".$airport["Country"]." (".$airport["AirportName"]." - ".$airportID.")";	
+						$airport["DisplayName"] = $airport["City"].", ".$airport["Country"]." (".$airport["AirportName"]." - ".$airport["IATACode"].")";	
 					}
 
 					$output [] = $airport;
@@ -114,6 +126,10 @@
 
 				$stmt -> free_result();
 			}
+
+			$time_end = microtime(true);
+			$time = $time_end - $time_start;
+			echo $time+"<br/>";
 		}
 
 		$stmt -> close();
