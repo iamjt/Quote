@@ -25,20 +25,16 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 	$scope.weightUnit = "kg";
 
 	//Test Values
-	$scope.originAirport = {
-		airportCode:"SIN"
-	};
-	$scope.destinationAirport = {
-		airportCode:"LAX"
-	};
+	$scope.originAirport;
+	$scope.destinationAirport;
 
 	$scope.dimensions = {
-		length:23,
-		width:42,
-		height:38
+		length:0,
+		width:0,
+		height:0
 	};
-	$scope.rawWeight = 32;
-	$scope.quantity = 2;
+	$scope.rawWeight = 0;
+	$scope.quantity = 0;
 	$scope.dimensionUnit = "cm";
 	$scope.weightUnit = "kg";
 
@@ -68,7 +64,7 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 	$scope.originValid = function()
 	{
 		if($scope.originAirport)
-			return $scope.originAirport.airportCode != null;
+			return $scope.originAirport.IATACode != null;
 		else
 			return null;
 	}
@@ -76,7 +72,7 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 	$scope.destinationValid = function()
 	{
 		if($scope.destinationAirport)
-			return $scope.destinationAirport.airportCode != null;
+			return $scope.destinationAirport.IATACode != null;
 		else
 			return false;
 	}
@@ -111,8 +107,6 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 				$scope.filterView = true;
 				break;
 		}
-
-		console.log($scope.formView, $scope.quoteView, $scope.filterView);
 	}
 
 	$scope.newQuote = function()
@@ -142,7 +136,7 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 			weight: $scope.weight()
 		}
 
-		var promise = QuoteService.getQuotes($scope.originAirport.airportCode, $scope.destinationAirport.airportCode, load);
+		var promise = QuoteService.getQuotes($scope.originAirport.IATACode, $scope.destinationAirport.IATACode, load);
 
 		promise.then(function(response){
 			$scope.showView("quotes");
@@ -246,29 +240,28 @@ app.service("QuoteService",["Airports","$http", "$q", function(Airports, $http, 
 			angular.copy({}, destination);
 			angular.copy([], quotelist);
 			angular.copy([], agentList);
+			angular.copy([], airlineList);
 			
-			console.log(response.data);
-
 			angular.copy(response.data.origin, origin);
 			angular.copy(response.data.destination, destination);
-			angular.copy(response.data.operators, quotelist);
 
-			var myQuote;
+			for(var key in response.data.operators)
+			{	
+				var operator = response.data.operators[key];
+				operator.code = key;
 
-			for(var i=0; i<quotelist.length; i++)
-			{
-				myQuote = quotelist[i]
+				if(operator.AirlineName)
+				{
+					quotelist.push(operator);
 
-				// if(myQuote.agentCode&&!agentList.includes(myQuote.agentCode)&&(myQuote.agentCode!=0))
-				// {
-				// 	agentList.push(myQuote.agentCode)
-				// }
-			}	
+					if(!airlineList.includes(operator.AirlineName))
+						airlineList.push(operator.AirlineName);
 
-			//saveQuote(originCode, destinationCode, loadParameters, quotes);
+					if(!agentList.includes(operator.agent))
+						agentList.push(operator.agent);
+				}
+			}
 		})
-
-
 
 		return airlineListPromise;
 	}

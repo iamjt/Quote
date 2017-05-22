@@ -23,62 +23,60 @@
 		if($result)
 		{
 			while($route = $result->fetch_assoc())
-			{
-				$routeQuotes = array();
-				$routeQuotes['GEN'] = array();
-				$routeQuotes['LIV'] = array();
-				$routeQuotes['PER'] = array();
-				$routeQuotes['DGR'] = array();
-				$routeQuotes['XPS'] = array();
-				$routeQuotes['SXPS'] = array();
-
-				$quoteStmt -> bind_param("s", $route['RouteID']);
-				$quoteStmt -> execute();
-
-				$quoteResult = $quoteStmt -> get_result();
-
-				while($quoteTable = $quoteResult -> fetch_assoc())
+			{	
+				//Build a hash our of all the route objects
+				//If the route does not exist, make the route object container
+				//Every route object should be specific to 
+				if(!isset($output[$route['RouteID']]))
 				{
-					$routeQuotes[$quoteTable['Commodity']][] = getQuote($quoteTable,$weight);
-				}
+					//Create the route object
+					//Route object holds the different prices
+					$routeObject = array ();
+					$routeObject['RouteID'] = $route['RouteID'];
 
-				$quoteStmt -> free_result();
-
-				$route["quotes"] = $routeQuotes;
-
-
-				if(!isset($output[$route['Airline']]))
-				{
-					$airlineObject = array ();
-
-					$airlineStmt->bind_param("s", $route['Airline']);
+					//Get the airline Name
+					$airlineStmt -> bind_param("s", $route['Airline']);
 					$airlineStmt->execute();
-
 					$airlineResult = $airlineStmt -> get_result();
-
 					while($airlineQuery = $airlineResult -> fetch_assoc())
 					{
-						$airlineObject["name"] = $airlineQuery['AirlineName'];
+						$routeObject['AirlineName'] = $airlineQuery['AirlineName'];
 					}
 
-					$airlineObject['direct'] = array ();
-					$output[$route['Airline']] = $airlineObject;		
-				}
-
-				if($route['TransitAirportCode'] == '0')
-				{
-					$output[$route['Airline']]['direct']['choices'][] = $route;
-				}
-				else
-				{
-					if(!isset($output[$route['Airline']][$route['TransitAirportCode']]))
+					$routeObject['agent'] = $route['AgentCode'];
+					$routeObject['transitAirportCode'] = $route['TransitAirportCode'];
+					
+					if($routeObject['transitAirportCode'] != '0')
 					{
-						$output[$route['Airline']][$route['TransitAirportCode']]['details'] = getAirportDetailsByCode($connection,$route['TransitAirportCode']);
-
-						$output[$route['Airline']][$route['TransitAirportCode']]['choices'] = array ();
+						$transitObject = getAirportDetailsByCode($connection, $routeObject['transitAirportCode']);
+						$routeObject['transitCountry'] = $transitObject['Country'];
+						$routeObject['transitCity'] = $transitObject['City'];
+						$routeObject['TransitAirportName'] = $transitObject['AirportName'];
 					}
 
-					$output[$route['Airline']][$route['TransitAirportCode']]['choices'][] = $route;
+					$routeQuotes = array();
+					$routeQuotes['GEN'] = array();
+					$routeQuotes['LIV'] = array();
+					$routeQuotes['PER'] = array();
+					$routeQuotes['DGR'] = array();
+					$routeQuotes['XPS'] = array();
+					$routeQuotes['SXPS'] = array();
+
+					$quoteStmt -> bind_param("s", $route['RouteID']);
+					$quoteStmt -> execute();
+
+					$quoteResult = $quoteStmt -> get_result();
+
+					while($quoteTable = $quoteResult -> fetch_assoc())
+					{
+						$routeQuotes[$quoteTable['Commodity']][] = getQuote($quoteTable,$weight);
+						asort($routeQuotes[$quoteTable['Commodity']]);
+					}
+
+					$quoteStmt -> free_result();
+
+					$routeObject["quotes"] = $routeQuotes;
+					$output[$route['RouteID']] = $routeObject;
 				}
 			}
 

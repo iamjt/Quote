@@ -68,9 +68,6 @@ app.service("Airports", ["$http", function($http){
 			angular.copy([],originAirports);
 			angular.copy(response.data.originAirports, originAirports);
 
-
-			console.log(originAirports);
-
 			angular.copy([],destinationCountries);
 			angular.copy(uniqueCountryList(response.data.destinationAirports), destinationCountries);
 
