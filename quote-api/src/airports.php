@@ -85,9 +85,7 @@
 
 		foreach($airportIDList as $airportID)
 		{
-			// send to browser
-			$time_start = microtime(true); 
-
+			$time_start = microtime(true);
 			$stmt->bind_param("s", $airportID);
 			$stmt->execute();
 
@@ -118,6 +116,10 @@
 
 				$stmt -> free_result();
 			}
+
+			$time_end = microtime(true);
+			$time = $time_end - $time_start;
+			echo $time+"<br/>";
 		}
 
 		$stmt -> close();
