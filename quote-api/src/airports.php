@@ -14,8 +14,7 @@
 		}
 
 		$stmt->execute();
-		$stmt->store_result();
-		$stmt -> bind_result($AirportName, $City, $Country, $ISOCode, $IATACode, $ICAOCode, $Region, $IATAZone, $LastUpdated);
+		$stmt->bind_result($AirportName, $City, $Country, $ISOCode, $IATACode, $ICAOCode, $Region, $IATAZone, $LastUpdated);
 
 		$output = array();
 
@@ -104,7 +103,6 @@
 
 		foreach($airportIDList as $airportID)
 		{
-			// send to browser
 			$stmt->bind_param("s", $airportID);
 			$stmt->execute();
 
