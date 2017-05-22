@@ -133,10 +133,8 @@
 
 				$stmt -> free_result();
 			}
-
 			$time_end = microtime(true);
 			$time = $time_end - $time_start;
-			echo $time+"<br/>";
 		}
 
 		$stmt -> close();
