@@ -14,7 +14,7 @@
 		}
 
 		$stmt->execute();
-		$result = $stmt->get_result();
+		$result = $stmt->store_result();
 
 		$output = array();
 
