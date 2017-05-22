@@ -180,9 +180,13 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 
 	$scope.filterByAirport = function(airports, viewValue, isOrigin){
 		return airports.filter(function(airport){
-
+			
 			viewValue = viewValue.toUpperCase();
-			return ((airport.IATACode.toUpperCase().startsWith(viewValue))||(airport.AirportName.toUpperCase().indexOf(viewValue) != -1));
+
+			if(airport.IATACode.startsWith(viewValue) || airport.ISOCode.startsWith(viewValue))
+				return true;
+			else
+				return (airport.AirportName.toUpperCase().indexOf(viewValue) != -1) || (airport.Country.toUpperCase().indexOf(viewValue) != -1) || (airport.City.toUpperCase().indexOf(viewValue) != -1)
 		});
 	}
 
