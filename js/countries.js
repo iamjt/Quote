@@ -58,24 +58,28 @@ app.service("Airports", ["$http", function($http){
 		return finalList;
 	}
 
-	$http.get(server+"airports").then(function(response){
+	this.initService = function()
+	{
 
-		if(response.status == 200)
-		{	
-			angular.copy([],originCountries);
-			angular.copy(uniqueCountryList(response.data.originAirports), originCountries);
+		return $http.get(server+"airports").then(function(response){
 
-			angular.copy([],originAirports);
-			angular.copy(response.data.originAirports, originAirports);
+			if(response.status == 200)
+			{	
+				angular.copy([],originCountries);
+				angular.copy(uniqueCountryList(response.data.originAirports), originCountries);
 
-			angular.copy([],destinationCountries);
-			angular.copy(uniqueCountryList(response.data.destinationAirports), destinationCountries);
+				angular.copy([],originAirports);
+				angular.copy(response.data.originAirports, originAirports);
 
-			angular.copy([],destinationAirports);
-			angular.copy(response.data.destinationAirports, destinationAirports);
-		}
-		else{}
-	});
+				angular.copy([],destinationCountries);
+				angular.copy(uniqueCountryList(response.data.destinationAirports), destinationCountries);
+
+				angular.copy([],destinationAirports);
+				angular.copy(response.data.destinationAirports, destinationAirports);
+			}
+			else{}
+		});
+	}
 }])
 
 app.filter("CountryFilter", function(){

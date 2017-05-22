@@ -1,5 +1,7 @@
 app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService", function($scope, Airports, QuoteService){
 
+	$scope.loading = true;
+
 	$scope.origin = QuoteService.currentOriginObject();
 	$scope.destination = QuoteService.currentDestinationObject();
 	$scope.quotelist = QuoteService.currentQuoteList();
@@ -136,10 +138,13 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 			weight: $scope.weight()
 		}
 
+		$scope.loading = true;
+
 		var promise = QuoteService.getQuotes($scope.originAirport.IATACode, $scope.destinationAirport.IATACode, load);
 
 		promise.then(function(response){
 			$scope.showView("quotes");
+			$scope.loading = false;
 		});
 	}
 
@@ -182,6 +187,10 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 	{
 		return myString;
 	}
+
+	Airports.initService().then(function(){
+		$scope.loading = false;
+	})
 }]);
 
 app.service("QuoteService",["Airports","$http", "$q", function(Airports, $http, $q){
