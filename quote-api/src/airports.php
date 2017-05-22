@@ -1,11 +1,11 @@
 <?php
 	
-	function getAirports($connection, $isOrigin)
+	function getAirport($connection, $isOrigin)
 	{
 		if($isOrigin)
-			$stmt = $connection -> prepare("SELECT * FROM `airport` WHERE `IATACode` IN (SELECT DISTINCT `OriginAirportCode` FROM `routes`)");
+			$stmt = $connection -> prepare("SELECT DISTINCT `OriginAirportCode` FROM `routes`");
 		else
-			$stmt = $connection -> prepare("SELECT * FROM `airport` WHERE `IATACode` IN (SELECT DISTINCT `DestinationAirportCode` FROM `routes`)");
+			$stmt = $connection -> prepare("SELECT DISTINCT `DestinationAirportCode` FROM `routes`");
 
 		if(!$stmt)
 		{
@@ -14,37 +14,19 @@
 		}
 
 		$stmt->execute();
-		$stmt->bind_result($AirportName, $City, $Country, $ISOCode, $IATACode, $ICAOCode, $Region, $IATAZone, $LastUpdated);
+		$stmt->store_result();
+		$stmt->bind_result($airportCode);
 
 		$output = array();
 
 		while($stmt->fetch())
-		{	
-			$airport = array();
-			$airport['City'] = $City;
-			$airport['IATACode'] = $IATACode;
-			$airport['Country'] = $Country;
-			$airport['AirportName'] = $AirportName;
-
-			if($airport["City"] == "Singapore")
-			{
-				$airport["DisplayName"] = "Singapore - ".$airport["IATACode"];
-			}
-			else if($airport["City"] == $airport["Country"])
-			{
-				$airport["DisplayName"] = $airport["City"]." (".$airport["AirportName"]." - ".$airport["IATACode"].")";	
-			}
-			else
-			{
-				$airport["DisplayName"] = $airport["City"].", ".$airport["Country"]." (".$airport["AirportName"]." - ".$airport["IATACode"].")";	
-			}
-
-			$output [] = $airport;
+		{
+			$output [] = $airportCode;
 		}
 
-		$stmt -> close();
-
 		return $output;
+
+		$stmt -> close();
 	}
 
 	function getAirportDetailsByCode($connection, $airportID)
@@ -103,6 +85,7 @@
 
 		foreach($airportIDList as $airportID)
 		{
+			$time_start = microtime(true);
 			$stmt->bind_param("s", $airportID);
 			$stmt->execute();
 
@@ -111,6 +94,7 @@
 			if($result)
 			{
 				$airport = $result->fetch_assoc();
+
 
 				if($airport)
 				{
@@ -129,8 +113,13 @@
 
 					$output [] = $airport;
 				}
+
 				$stmt -> free_result();
 			}
+
+			$time_end = microtime(true);
+			$time = $time_end - $time_start;
+			echo $time+"<br/>";
 		}
 
 		$stmt -> close();

@@ -40,9 +40,12 @@ $app->get('/airports', function($request, $response, $args) {
 
 	$connection = connectToDB();
 	
+	$originAirportCodes = getAirport($connection, true);
+	$destinationAirportCodes = getAirport($connection, false);
+
 	$output = array();
-	$output ["originAirports"]  = getAirports($connection, true);
-	$output ["destinationAirports"] = getAirports($connection, false);
+	$output ["originAirports"] = getAirportListByCodes($connection, $originAirportCodes);
+	$output ["destinationAirports"] = getAirportListByCodes($connection, $destinationAirportCodes);
 
 	if(isset($connection))
 	{
