@@ -14,12 +14,21 @@
 		}
 
 		$stmt->execute();
-		$result = $stmt->store_result();
+		$stmt->store_result();
+
+		$stmt -> bind_result($AirportName, $City, $Country, $ISOCode, $IATACode, $ICAOCode, $Region, $IATAZone, $LastUpdated);
+
 
 		$output = array();
 
-		while($airport = $result->fetch_assoc())
-		{
+		while($stmt->fetch())
+		{	
+			$airport = array();
+			$airport['City'] = $City;
+			$airport['IATACode'] = $IATACode;
+			$airport['Country'] = $Country;
+			$airport['AirportName'] = $AirportName;
+
 			if($airport["City"] == "Singapore")
 			{
 				$airport["DisplayName"] = "Singapore - ".$airport["IATACode"];
