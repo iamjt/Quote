@@ -16,6 +16,9 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 	$scope.originAirport = "";
 	$scope.destinationAirport = "";
 
+	$scope.airlineFilterList = [];
+	$scope.agentFilterList = [];
+
 	$scope.dimensions = {
 		length:"",
 		width:"",
@@ -186,6 +189,14 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 	$scope.orderByAlphabets = function(myString)
 	{
 		return myString;
+	}
+
+	$scope.filterOperatorResults = function(operator)
+	{
+		var airlineNameTest = ($scope.airlineFilterList.length == 0)||$scope.airlineFilterList.includes(operator.AirlineName);
+		var agentNameTest = ($scope.agentFilterList.length == 0)||$scope.agentFilterList.includes(operator.agent);
+
+		return airlineNameTest&&agentNameTest;
 	}
 
 	Airports.initService().then(function(){
