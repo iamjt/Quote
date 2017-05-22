@@ -85,7 +85,6 @@
 
 		foreach($airportIDList as $airportID)
 		{
-			$time_start = microtime(true);
 			$stmt->bind_param("s", $airportID);
 			$stmt->execute();
 
@@ -95,31 +94,26 @@
 			{
 				$airport = $result->fetch_assoc();
 
-
 				if($airport)
 				{
-					if($airport["City"] == "Singapore")
-					{
-						$airport["DisplayName"] = "Singapore - ".$airport["IATACode"];
-					}
-					else if($airport["City"] == $airport["Country"])
-					{
-						$airport["DisplayName"] = $airport["City"]." (".$airport["AirportName"]." - ".$airport["IATACode"].")";	
-					}
-					else
-					{
-						$airport["DisplayName"] = $airport["City"].", ".$airport["Country"]." (".$airport["AirportName"]." - ".$airport["IATACode"].")";	
-					}
+					// if($airport["City"] == "Singapore")
+					// {
+					// 	$airport["DisplayName"] = "Singapore - ".$airport["IATACode"];
+					// }
+					// else if($airport["City"] == $airport["Country"])
+					// {
+					// 	$airport["DisplayName"] = $airport["City"]." (".$airport["AirportName"]." - ".$airport["IATACode"].")";	
+					// }
+					// else
+					// {
+					// 	$airport["DisplayName"] = $airport["City"].", ".$airport["Country"]." (".$airport["AirportName"]." - ".$airport["IATACode"].")";	
+					// }
 
 					$output [] = $airport;
 				}
 
 				$stmt -> free_result();
 			}
-
-			$time_end = microtime(true);
-			$time = $time_end - $time_start;
-			echo $time+"<br/>";
 		}
 
 		$stmt -> close();
