@@ -36,6 +36,19 @@ $app->get('/authenticate', function($request, $response, $args) {
 	->write(json_encode($output));
 });
 
+$app->get('/airport/{airport}', function($request, $response, $args) {
+
+	$connection = connectToDB();
+	
+	$output = getAirportDetailsByCode($connection, $args['airport']);
+
+	$response
+	->withStatus(200)
+	->withHeader('Content-Type', 'application/json')
+	->write(json_encode($output));
+});
+
+
 $app->get('/airports', function($request, $response, $args) {
 
 	$connection = connectToDB();
