@@ -15,9 +15,7 @@
 
 		$stmt->execute();
 		$stmt->store_result();
-
 		$stmt -> bind_result($AirportName, $City, $Country, $ISOCode, $IATACode, $ICAOCode, $Region, $IATAZone, $LastUpdated);
-
 
 		$output = array();
 
@@ -45,9 +43,9 @@
 			$output [] = $airport;
 		}
 
-		return $output;
-
 		$stmt -> close();
+
+		return $output;
 	}
 
 	function getAirportDetailsByCode($connection, $airportID)
