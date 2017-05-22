@@ -71,7 +71,7 @@
 
 	function getAirportListByCodes($connection, $airportIDList)
 	{
-		$stmt = $connection -> prepare("SELECT * from `airport` WHERE `IATACode` = ?");
+		$stmt = $connection -> prepare("SELECT `AirportName`, `City`, `Country` from `airport` WHERE `IATACode` = ?");
 
 		if(!$stmt)
 		{
@@ -96,18 +96,18 @@
 
 				if($airport)
 				{
-					// if($airport["City"] == "Singapore")
-					// {
-					// 	$airport["DisplayName"] = "Singapore - ".$airport["IATACode"];
-					// }
-					// else if($airport["City"] == $airport["Country"])
-					// {
-					// 	$airport["DisplayName"] = $airport["City"]." (".$airport["AirportName"]." - ".$airport["IATACode"].")";	
-					// }
-					// else
-					// {
-					// 	$airport["DisplayName"] = $airport["City"].", ".$airport["Country"]." (".$airport["AirportName"]." - ".$airport["IATACode"].")";	
-					// }
+					if($airport["City"] == "Singapore")
+					{
+						$airport["DisplayName"] = "Singapore - ".$airportID;
+					}
+					else if($airport["City"] == $airport["Country"])
+					{
+						$airport["DisplayName"] = $airport["City"]." (".$airport["AirportName"]." - ".$airportID.")";	
+					}
+					else
+					{
+						$airport["DisplayName"] = $airport["City"].", ".$airport["Country"]." (".$airport["AirportName"]." - ".$airportID.")";	
+					}
 
 					$output [] = $airport;
 				}
