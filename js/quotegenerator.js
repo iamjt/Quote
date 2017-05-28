@@ -13,8 +13,21 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 	$scope.agentList = QuoteService.agentList();
 	$scope.services = QuoteService.services();
 
-	$scope.originBuffer = Airports.originBuffer();
-	$scope.destinationBuffer = Airports.destinationBuffer();
+	$scope.originBuffer = function(){
+
+		if(Airports.originBuffer() < 99)
+			return "fa fa-circle-o-notch fa-spin fa-fw";
+		else
+			return "fa fa-check text-success";
+	};
+
+	$scope.destinationBuffer = function(){
+
+		if(Airports.destinationBuffer() < 99)
+			return "fa fa-circle-o-notch fa-spin fa-fw";
+		else
+			return "fa fa-check text-success";
+	}
 
 	$scope.airlineFilterList = [];
 	$scope.agentFilterList = [];
@@ -216,9 +229,10 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 	})
 
 	$scope.loadingTimer = setInterval(function(){
-		Airports.getAirportBuffer();
-		$scope.$apply();
-		console.log("applying");
+		Airports.getAirportBuffer().then(function(){
+			Airports.originBuffer();
+			Airports.destinationBuffer();			
+		});
 	}, 300);
 }]);
 

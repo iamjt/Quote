@@ -37,16 +37,15 @@ app.service("Airports", ["$http",function($http){
 	this.originBuffer = function()
 	{
 		if(totalOrigins > 0)
-			return currentOrigins/totalOrigins;
+			return Math.round(currentOrigins/totalOrigins*100);
 		else
 			return 0;
 	}
 
 	this.destinationBuffer = function()
-	{
-		console.log("destinationBuffer", totalDestinations);
+	{	
 		if(totalDestinations > 0)
-			return currentDestinations/totalDestinations;
+			return Math.round(currentDestinations/totalDestinations*100);
 		else
 			return 0;
 	}
@@ -105,10 +104,10 @@ app.service("Airports", ["$http",function($http){
 
 	this.getAirportBuffer = function()
 	{
-		$http.get(server+"airports-loading-status").then(function(response){
+		return $http.get(server+"airports-loading-status").then(function(response){
 			currentDestinations = response.data.currentDestinations;
 
-			totalOrigins = response.data.currentDestinations;
+			totalOrigins = response.data.totalOrigins;
 			currentOrigins = response.data.currentOrigins;
 			totalDestinations = response.data.totalDestinations;
 			currentDestinations = response.data.currentDestinations;

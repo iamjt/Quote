@@ -14,10 +14,15 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="text-center" style="margin-top: 25%;">
-							<p><i class="fa fa-spinner fa-spin fa-4x fa-fw"></i></p>
-							<h3>Loading...</h3>
-							<h3>{{originBuffer}}</h3>
-							<h3>{{destinationBuffer}}</h3>
+							<h3>Starting Application</h3>
+							<h3>
+								Origin Airports
+								<i ng-class="originBuffer()"></i>
+							</h3>
+							<h3>
+								Destination Airports
+								<i ng-class="destinationBuffer()"></i>
+							</h3>
 						</div>
 					</div>
 				</div>
