@@ -13,33 +13,32 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 	$scope.agentList = QuoteService.agentList();
 	$scope.services = QuoteService.services();
 
-	$scope.originAirport = "";
-	$scope.destinationAirport = "";
-
 	$scope.airlineFilterList = [];
 	$scope.agentFilterList = [];
 
-	$scope.dimensions = {
-		length:"",
-		width:"",
-		height:""
-	};
-	$scope.rawWeight = 0;
-	$scope.quantity = 0;
-	$scope.dimensionUnit = "cm";
-	$scope.weightUnit = "kg";
+	// $scope.originAirport = "";
+	// $scope.destinationAirport = "";
+	// $scope.dimensions = {
+	// 	length:"",
+	// 	width:"",
+	// 	height:""
+	// };
 
-	//Test Values
-	$scope.originAirport;
-	$scope.destinationAirport;
+	// $scope.rawWeight = 0;
+	// $scope.quantity = 0;
+	// $scope.dimensionUnit = "cm";
+	// $scope.weightUnit = "kg";
 
+	$scope.originAirport = {IATACode:"SIN"};
+	$scope.destinationAirport = {IATACode:"LAX"};
 	$scope.dimensions = {
-		length:0,
-		width:0,
-		height:0
+		length:120,
+		width:120,
+		height:75
 	};
-	$scope.rawWeight = 0;
-	$scope.quantity = 0;
+
+	$scope.rawWeight = 84;
+	$scope.quantity = 2;
 	$scope.dimensionUnit = "cm";
 	$scope.weightUnit = "kg";
 
@@ -151,6 +150,11 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 		});
 	}
 
+	$scope.getServiceQuote = function(routeID, commodity)
+	{
+		QuoteService.getServiceQuote(routeID, commodity);
+	}
+
 	$scope.previousQuotes = function()
 	{
 		
@@ -205,7 +209,12 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 
 	Airports.initService().then(function(){
 		$scope.loading = false;
+		clearInterval($scope.loadingTimer);
 	})
+
+	$scope.loadingTimer = setInterval(function(){
+		Airports.getAirportBuffer();
+	}, 500);
 }]);
 
 app.service("QuoteService",["Airports","$http", "$q", function(Airports, $http, $q){
@@ -288,6 +297,31 @@ app.service("QuoteService",["Airports","$http", "$q", function(Airports, $http, 
 		})
 
 		return airlineListPromise;
+	}
+
+	this.getServiceQuote = function(route, service)
+	{
+		var data = {
+			routeID: route,
+			commodity: service
+		}
+
+		var getPDFPromise = $http.post(server+"get-quote/", JSON.stringify(data));
+
+		getPDFPromise.then(function(response){
+
+			var blob = new Blob([response.data], { type: "application/pdf"});
+			var fileName = route+"-"+service+".pdf";
+	
+			url = window.URL.createObjectURL(blob);
+			
+			var a = document.createElement("a");
+			a.href = url;
+			a.download = fileName;
+			a.click();
+			window.URL.revokeObjectURL(url);
+		})
+
 	}
 
 	function saveQuote(originCode, destinationCode, loadParameters,quotesarray){

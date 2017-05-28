@@ -1,4 +1,4 @@
-app.service("Airports", ["$http", function($http){
+app.service("Airports", ["$http", "$cookies",function($http, $cookies){
 
 	//Lists of unique countries
 	var originCountries = [];
@@ -79,6 +79,11 @@ app.service("Airports", ["$http", function($http){
 			}
 			else{}
 		});
+	}
+
+	this.getAirportBuffer = function()
+	{
+		console.log($cookies);
 	}
 }])
 

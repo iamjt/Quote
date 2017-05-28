@@ -48,7 +48,6 @@ $app->get('/airport/{airport}', function($request, $response, $args) {
 	->write(json_encode($output));
 });
 
-
 $app->get('/airports', function($request, $response, $args) {
 
 	$connection = connectToDB();
@@ -97,10 +96,35 @@ $app->post('/route-operators/', function($request, $response, $args) {
 
 //Given a route id
 //produces a download link via json
-$app->get('/get-quote/[{routeid}]', function($request, $response, $args) {
+$app->post('/get-quote/', function($request, $response, $args) {
 	
-	if(!isset($args['routeid']))
-	{
-		return $this->renderer->render($response, '403.phtml', $args);
-	};
+	$routeID = $request->getParsedBody()['routeID'];
+	$parameters = explode("-", $routeID);
+		
+	$connection = connectToDB();
+
+	//Get airline details
+	$airlineCode = $parameters[0];
+	$airlineName = getAirlineByCode($connection, $airlineCode)['AirlineName'];
+
+	//Get origin details
+	$originCode = $parameters[1];
+	$origin = getAirportDetailsByCode($connection, $originCode);
+
+	//Get Destination details
+	$destinationCode = $parameters[2];
+	$destination = getAirportDetailsByCode($connection, $destinationCode);
+
+	$quotes = getRouteQuotes($connection, $routeID);	
+
+	$output = array();
+	$output["AirlineName"] = $airlineName;
+	$output["origin"] = $origin;
+	$output["destination"] = $destination;
+	$output["quotes"] = $quotes;
+
+	$response
+	->withStatus(200)
+	->withHeader('Content-Type', 'application/json')
+	->write(json_encode($output));
 });

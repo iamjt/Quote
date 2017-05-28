@@ -169,4 +169,37 @@
 
 		return $output;
 	}
+
+	function getRouteQuotes($connection, $routeID)
+	{
+		$stmt = $connection -> prepare("SELECT * FROM `quotes` WHERE `RouteID` = ? ORDER BY `routeID`");
+
+		$stmt -> bind_param("s", $routeID);
+		$stmt -> execute();
+
+		$quoteResult = $stmt -> get_result();
+
+		$routeQuotes = array();
+
+		while($quote = $quoteResult -> fetch_assoc())
+		{	
+			$quoteTable = array();
+
+			$quoteTable['Serial'] = $quote['Serial'];
+			$quoteTable['Commodity'] = $quote['Commodity'];
+			$quoteTable['Minimum'] = $quote['Minimum'];
+			$quoteTable['BPN45'] = $quote['BPN45'];
+			$quoteTable['BP45'] = $quote['BP45'];
+			$quoteTable['BP100'] = $quote['BP100'];
+			$quoteTable['BP250'] = $quote['BP250'];
+			$quoteTable['BP300'] = $quote['BP300'];
+			$quoteTable['BP500'] = $quote['BP500'];
+			$quoteTable['BP1000'] = $quote['BP1000'];
+			$quoteTable['Note'] = $quote['Note'];
+
+			$routeQuotes[] = $quoteTable;
+		}
+
+		return $routeQuotes;
+	}
 ?>

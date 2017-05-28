@@ -1,5 +1,29 @@
 <?php
-	
+
+	function getAirlineByCode($connection, $airlineID)
+	{	
+		$stmt = $connection -> prepare("SELECT * FROM `airlines` WHERE `IATADesignator` = ?");
+
+		if(!$stmt)
+		{
+			printf("Error: Unable to prepare statement");
+		    exit();
+		}
+
+		$stmt->bind_param("s", $airlineID);
+		$stmt->execute();
+
+		$result = $stmt->get_result();
+		$airline = $result->fetch_assoc();
+
+		$stmt -> close();
+
+		if($airline)
+			return $airline;
+		else
+			return null;
+	}
+
 	function getAirports($connection, $isOrigin)
 	{
 		if($isOrigin)
@@ -14,9 +38,23 @@
 		}
 
 		$stmt->execute();
+
 		$result = $stmt->get_result();
 
+		if($isOrigin)
+		{
+			$_COOKIE["totalOrigins"] = $stmt -> affected_rows;
+			$_COOKIE["currentOrigins"] = 0;
+		}
+		else
+		{
+			$_COOKIE["totalDestinations"] = $stmt -> affected_rows;
+			$_COOKIE["currentDestinations"] = 0;
+		}
+
 		$output = array();
+
+		$airportCount = 0;
 
 		while($airport = $result->fetch_assoc())
 		{
@@ -34,6 +72,12 @@
 			}
 
 			$output [] = $airport;
+			$airportCount++;
+
+			if($isOrigin)
+				$_COOKIE["currentOrigins"] = $airportCount;
+			else
+				$_COOKIE['currentDestinations'] = $airportCount;
 		}
 
 		return $output;

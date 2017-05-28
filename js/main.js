@@ -1,4 +1,4 @@
-var app = angular.module('ticapp',[ "ngSanitize","ngAnimate","ui.router","ui.bootstrap",'angularFileUpload']);
+var app = angular.module('ticapp',[ "ngSanitize","ngAnimate","ngCookies","ui.router","ui.bootstrap",'angularFileUpload']);
 
 //server = "http://jt-demo-webapp.azurewebsites.net/quote-api/public/";
 server = "./quote-api/public/";

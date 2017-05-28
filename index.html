@@ -6,11 +6,11 @@
 		<link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="./lib/font-awesome/css/font-awesome.min.css">
 		<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,400i,700|Dosis:400,400i,700" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" href="./css/tic.css">
+		<link rel="stylesheet" href="./css/quote-theme.css">
 	</head>
-	<body  ng-app="ticapp" ng-cloak>
-		<div class="mobile-visible-wrapper" ng-controller="QuoteGeneratorController">
-			<div class="container-fluid" ng-show="loading">
+	<body ng-app="ticapp" ng-cloak>
+		<div ng-controller="QuoteGeneratorController">
+			<div class="container-fluid" ng-show="true">
 				<div class="row">
 					<div class="col-md-12">
 						<div class="text-center" style="margin-top: 25%;">
@@ -20,7 +20,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="container-fluid" ng-show="!loading">
+			<!-- <div class="container-fluid" ng-show="!loading">
 				<div class="container-fluid mobile-top-toggle-bar">
 					<div class="col-xs-4 text-center mobile-top-toggle" ng-click="newQuote()">
 						<div class="pill">New</div>
@@ -117,7 +117,7 @@
 						</div>
 						<div class="row">
 							<div class="col-xs-3" ng-repeat="(service, quotes) in operator.quotes"  ng-show="quotes.length > 0">
-								<div>
+								<div ng-click="getServiceQuote(operator.RouteID, service)">
 									<h4 class="text-center">{{service}}</h4>
 									<p class="text-center">{{quotes[0]}}</p>
 								</div>
@@ -144,18 +144,18 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<script src="./lib/jquery/jquery.min.js"></script>
 		<script src="./lib/bootstrap/js/bootstrap.min.js"></script>
 		<script src="./lib/angular/angular.min.js"></script>
 		<script src="./lib/angular/angular-sanitize.min.js"></script>
 		<script src="./lib/angular/angular-animate.min.js"></script>
+		<script src="./lib/angular/angular-cookies.min.js"></script>
 		<script src="./lib/angular-ui-router/angular-ui-router.min.js"></script>
 		<script src="./lib/angular-file-upload/angular-file-upload.min.js"></script>
 		<script src="./lib/moment/moment-with-locales.min.js"></script>
 		<script src="./lib/ui-bootstrap/ui-bootstrap.min.js"></script>
 
-		<script src="./js/test.js"></script>
 		<script src="./js/main.js"></script>
 		<script src="./js/airlinedirectory.js"></script>
 		<script src="./js/quotegenerator.js"></script>
