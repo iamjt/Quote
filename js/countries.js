@@ -1,4 +1,4 @@
-app.service("Airports", ["$http", "$cookies",function($http, $cookies){
+app.service("Airports", ["$http",function($http){
 
 	//Lists of unique countries
 	var originCountries = [];
@@ -7,6 +7,11 @@ app.service("Airports", ["$http", "$cookies",function($http, $cookies){
 	//Lists of unique airports
 	var originAirports = [];
 	var destinationAirports = [];
+
+	var totalOrigins = 0;
+	var currentOrigins = 0;
+	var totalDestinations = 0;
+	var currentDestinations = 0;
 
 	this.originCountryList = function(){
 		return originCountries;
@@ -27,6 +32,23 @@ app.service("Airports", ["$http", "$cookies",function($http, $cookies){
 	this.getLocation = function(airportCode){
 
 		return http.get(server+"airports/"+airportCode);
+	}
+
+	this.originBuffer = function()
+	{
+		if(totalOrigins > 0)
+			return currentOrigins/totalOrigins;
+		else
+			return 0;
+	}
+
+	this.destinationBuffer = function()
+	{
+		console.log("destinationBuffer", totalDestinations);
+		if(totalDestinations > 0)
+			return currentDestinations/totalDestinations;
+		else
+			return 0;
 	}
 
 	function uniqueCountryList(myList)
@@ -83,7 +105,14 @@ app.service("Airports", ["$http", "$cookies",function($http, $cookies){
 
 	this.getAirportBuffer = function()
 	{
-		console.log($cookies);
+		$http.get(server+"airports-loading-status").then(function(response){
+			currentDestinations = response.data.currentDestinations;
+
+			totalOrigins = response.data.currentDestinations;
+			currentOrigins = response.data.currentOrigins;
+			totalDestinations = response.data.totalDestinations;
+			currentDestinations = response.data.currentDestinations;
+		})
 	}
 }])
 

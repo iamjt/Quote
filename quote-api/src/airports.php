@@ -1,4 +1,36 @@
 <?php
+	
+	function setLoadingCookie($key, $value)
+	{
+		setcookie( $key, $value, time() + 120, './', $_SERVER['HTTP_HOST'], isset ( $_SERVER["HTTPS"] ) , false );
+	}
+
+	function getAirportLoadStatus()
+	{
+		$output = array();
+
+		if(isset($_COOKIE['totalOrigins']))
+			$output['totalOrigins'] = $_COOKIE['totalOrigins'];
+		else
+			$output['totalOrigins'] = 0;
+
+		if(isset($_COOKIE['currentOrigins']))
+			$output['currentOrigins'] = $_COOKIE['currentOrigins'];
+		else
+			$output['currentOrigins'] = 0;
+		
+		if(isset($_COOKIE['totalDestinations']))
+			$output['totalDestinations'] = $_COOKIE['totalDestinations'];
+		else
+			$output['totalDestinations'] = 0;
+
+		if(isset($_COOKIE['currentDestinations']))
+			$output['currentDestinations'] = $_COOKIE['currentDestinations'];
+		else
+			$output['currentDestinations'] = 0;
+
+		return $output;
+	}
 
 	function getAirlineByCode($connection, $airlineID)
 	{	
@@ -43,13 +75,13 @@
 
 		if($isOrigin)
 		{
-			$_COOKIE["totalOrigins"] = $stmt -> affected_rows;
-			$_COOKIE["currentOrigins"] = 0;
+			setLoadingCookie("totalOrigins", $stmt -> affected_rows);
+			setLoadingCookie("currentOrigins", 0);
 		}
 		else
 		{
-			$_COOKIE["totalDestinations"] = $stmt -> affected_rows;
-			$_COOKIE["currentDestinations"] = 0;
+			setLoadingCookie("totalDestinations", $stmt -> affected_rows);
+			setLoadingCookie("currentDestinations", 0);
 		}
 
 		$output = array();
@@ -75,14 +107,12 @@
 			$airportCount++;
 
 			if($isOrigin)
-				$_COOKIE["currentOrigins"] = $airportCount;
+				setLoadingCookie("currentOrigins", $airportCount);
 			else
-				$_COOKIE['currentDestinations'] = $airportCount;
+				setLoadingCookie('currentDestinations', $airportCount);
 		}
 
 		return $output;
-
-		$stmt -> close();
 	}
 
 	function getAirportDetailsByCode($connection, $airportID)

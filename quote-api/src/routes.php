@@ -67,6 +67,16 @@ $app->get('/airports', function($request, $response, $args) {
 	->write(json_encode($output));
 });
 
+$app->get('/airports-loading-status', function($request, $response, $args) {
+
+	$output = getAirportLoadStatus();
+
+	$response
+	->withStatus(200)
+	->withHeader('Content-Type', 'application/json')
+	->write(json_encode($output));
+});
+
 //Should be a post function
 //Route operators for given origin-destination route
 //Requires the load object defined as

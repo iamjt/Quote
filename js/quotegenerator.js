@@ -13,6 +13,9 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 	$scope.agentList = QuoteService.agentList();
 	$scope.services = QuoteService.services();
 
+	$scope.originBuffer = Airports.originBuffer();
+	$scope.destinationBuffer = Airports.destinationBuffer();
+
 	$scope.airlineFilterList = [];
 	$scope.agentFilterList = [];
 
@@ -214,7 +217,9 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 
 	$scope.loadingTimer = setInterval(function(){
 		Airports.getAirportBuffer();
-	}, 500);
+		$scope.$apply();
+		console.log("applying");
+	}, 300);
 }]);
 
 app.service("QuoteService",["Airports","$http", "$q", function(Airports, $http, $q){
