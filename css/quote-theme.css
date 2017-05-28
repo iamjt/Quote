@@ -38,7 +38,7 @@ body {
 	padding: 0px;
 	margin: 0px;
 
-	background-color: #F8F8F8;
+	background-color: #F6F6F6;
 
 	font-family: Segoe UI,Helvetica Neue,Arial,sans-serif;
 	font-size: 15px;
@@ -55,6 +55,8 @@ h2 {
 	font-size: 34px;
 	line-height: 40px;
 	font-weight: 300;
+
+	margin-top: 5px;
 }
 
 h3 {
@@ -71,10 +73,28 @@ h4 {
 
 strong
 {
-	font-weight:600;
+	font-weight:900;
 }
 
 hr
 {
 	border: 1px solid #ddd;
+}
+
+.dropdown-menu {
+	min-width: 60px !important;
+}
+
+.form-group > .dropdown-menu {
+	max-width: 100%;
+}
+
+.form-group > .dropdown-menu li
+{
+	border-bottom: 1px solid #DDD;
+}
+
+.form-group > .dropdown-menu li a
+{
+	white-space: normal;
 }

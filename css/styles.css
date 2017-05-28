@@ -7,15 +7,17 @@
 {
 	position: fixed;
 	top: 0;
-	left: 17.5;
-	right: 17.5;
+	left: 15px;
+	right: 15px;
+
+	background-color: #E57368;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 .mobile-nav-item
 {
 	text-align: center;
 	padding: 10px 0px 0px 0px;
-
 	user-select: none;
 
 	transition: all 0.2s ease-in-out;
@@ -24,13 +26,13 @@
 .mobile-nav-item-content
 {
 	padding-bottom: 5px;
-	color: #666;
+	color: #fff;
 }
 
 .mobile-nav-item-base
 {
-	border-top: 3px solid #666;
-	max-height: 4px;
+	border-top: 3px solid #FFF;
+	max-height: 8px;
 	width: 0%;
 	opacity: 0%;
 	transition: all 0.2s ease-in-out;
@@ -46,37 +48,12 @@
 .mobile-content-wrapper
 {
 	position: fixed;
-	top: 46px;
+	top: 40px;
 	left: 0px;
 	right: 0px;
 	height: calc(100% - 46px);
 	overflow-y: scroll;
 	overflow-x: hidden;
-}
-
-.mobile-top-scroller, .quote-list-item-service-wrapper
-{
-	overflow: auto;
-	white-space: nowrap;
-	margin-bottom: 10px;
-}
-
-.quote-list-item-service-wrapper::-webkit-scrollbar, .mobile-top-scroller::-webkit-scrollbar { 
-	display: none; 
-}
-
-.origin-wrapper, .destination-wrapper, .dimensions-wrapper, .total-load-wrapper
-{
-/*		display: inline-block;*/
-/*		vertical-align: top; */
-/*		width: 80%;
-	max-width: 300px;*/
-	padding: 15px;
-
-/*		min-height: 150px;*/
-
-	margin: 5px 7.5px;
-	border-radius: 3px;
 }
 
 .submission-wrapper
@@ -86,56 +63,8 @@
 
 .dimensions-wrapper, .total-load-wrapper
 {
-/*		min-height: 300px;*/
 	background-color: #FBCB43;
 }
-
-.quote-list-item 
-{
-	margin-bottom: 10px;
-	overflow: auto;
-	white-space: nowrap;
-}
-
-.quote-list-item ::-webkit-scrollbar { 
-	display: none; 
-}
-
-.quote-list-item-heading-wrapper
-{
-	display: inline-block;
-	vertical-align: top;
-}
-
-.quote-list-item-heading-wrapper > h4
-{
-	margin-top: 0px;
-}
-
-.quote-price-item
-{
-	display: inline-block;
-	vertical-align: top;
-	margin-right: 15px;
-}
-
-.dropdown-menu {
-	min-width: 60px !important;
-}
-
-.form-group > .dropdown-menu {
-	max-width: 100%;
-}
-
-.form-group > .dropdown-menu li
-{
-	border-bottom: 1px solid #DDD;
-}
-
-.form-group > .dropdown-menu li a
-{
-	white-space: normal;
-}	
 
 .dimension-inputs
 {
@@ -208,7 +137,65 @@
 .quote-card
 {
 	margin:5px 7.5px;
+	margin-top: 35px;
 	background-color: #fff;
-	border-radius: 3px;
-	border:1px solid #AAA;
+	border-radius: 10px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+#form-view > .quote-card
+{
+	margin-top: 10px;	
+}
+
+.quote-card-blue
+{
+	background-color: #77A7FB;
+	color: #FFF !important;
+}
+
+.quote-card-red
+{
+	background-color: #E57368;
+}
+
+.quote-card-green
+{
+	background-color: #3BCF8B;
+	color: #FFF !important;
+}
+
+.quote-card-yellow
+{
+	background-color: #FBE473;
+}
+
+.quote-card-purple
+{
+	background-color: #E1A3E5;
+	color: #FFF !important;
+}
+
+.airline-logo
+{
+	margin-top: -25px;
+}
+
+.airline-logo > img
+{
+	-webkit-filter: drop-shadow(5px 5px 5px #222);
+	filter: drop-shadow(5px 5px 5px #222);
+}
+
+
+.connector
+{
+	margin-top: 10px;
+	padding-bottom: 3px;
+	border-bottom: 2px solid #E57368;
+}
+
+.connector-base
+{
+	margin-top: 3px;
 }

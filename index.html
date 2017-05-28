@@ -12,7 +12,7 @@
 		<div ng-controller="QuoteGeneratorController">
 			<div class="container-fluid" ng-show="loading">
 				<div class="row">
-					<div class="col-md-12 loading-screen">
+					<div class="col-xs-12 loading-screen">
 						<div class="text-center">
 							<h1>
 								<img width="50%" src="./assets/images/tic-logo.gif"/>
@@ -26,7 +26,7 @@
 							</p>
 						</div>
 						<div class="text-center" ng-show="!initiating">
-							<h4>Computing Expected Costs</h4>
+							<h4>Loading Rate Data</h4>
 							<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
 						</div>
 					</div>
@@ -47,102 +47,167 @@
 						<div class="mobile-nav-item-base"></div>
 					</div>
 				</div>
-				<div class="mobile-content-wrapper" ng-show="formView">
-					<div class="origin-wrapper">
-						<h2>Origin</h2>
-						<div class="form-group">
-							<input class="form-control" ng-model="originAirport" uib-typeahead="originAirportObject as originAirportObject.DisplayName for originAirportObject in filterByAirport(originAirportList, $viewValue, true) | limitTo:5"/>
-						</div>
-					</div>
-					<div class="destination-wrapper">
-						<h2>Destination</h2>
-						<div class="form-group">
-							<input class="form-control" ng-model="destinationAirport" uib-typeahead="destinationAirportObject as destinationAirportObject.DisplayName for destinationAirportObject in filterByAirport(destinationAirportList, $viewValue, false) | limitTo:5"/>
-							<label class="control-label">{{}}</label>
-						</div>
-					</div>
-					<div class="dimensions-wrapper">
-						<h2>Total Load</h2>
-						<div class="form-group">
-							<label class="control-label">Number of Packages</label>
-							<input class="form-control" ng-model="quantity" type="number"/>
-						</div>
-						<div class="form-group">
-							<label class="control-label">Total Length/Width/Height (
-								<span class="dropdown">
-									<a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">{{dimensionUnit}}</a>
-									<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-										<li><a ng-click="setDimensionsUnit('cm')">cm</a></li>
-										<li><a ng-click="setDimensionsUnit('in')">in</a></li>
-									</ul>
-								</span>
-								)</label>
-							<div class="form-control dimension-fields">
-								<input placeholder="L" class="dimension-inputs" ng-model="dimensions.length" type="number"/>
-								<input placeholder="W" class="dimension-inputs" ng-model="dimensions.width" type="number"/>
-								<input placeholder="H" class="dimension-inputs" ng-model="dimensions.height" type="number"/>
+				<div class="mobile-content-wrapper" id="form-view" ng-show="formView">
+					<div class="quote-card quote-card-green">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-xs-12">
+									<h2>Airports</h2>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">
+									<h4>Origin</h4>
+									<div class="form-group">
+										<input class="form-control" ng-model="originAirport" uib-typeahead="originAirportObject as originAirportObject.DisplayName for originAirportObject in filterByAirport(originAirportList, $viewValue, true) | limitTo:5"/>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">
+									<h4>Destination</h4>
+									<div class="form-group">
+										<input class="form-control" ng-model="destinationAirport" uib-typeahead="destinationAirportObject as destinationAirportObject.DisplayName for destinationAirportObject in filterByAirport(destinationAirportList, $viewValue, false) | limitTo:5"/>
+										<label class="control-label">{{}}</label>
+									</div>
+								</div>
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="control-label">Weight
-							(
-								<span class="dropdown">
-									<a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">{{weightUnit}}</a>
-									<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-										<li><a ng-click="setWeightUnit('kg')">kg</a></li>
-										<li><a ng-click="setWeightUnit('lb')">lb</a></li>
-									</ul>
-								</span>
-							)
-							</label>
-							<input class="form-control" ng-model="rawWeight" type="number"/>
+					</div>
+					<div class="quote-card quote-card-yellow">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-xs-12">
+									<h2>Total Load</h2>
+									<div class="form-group">
+										<label class="control-label">Number of Packages</label>
+										<input class="form-control" ng-model="quantity" type="number"/>
+									</div>
+									<div class="form-group">
+										<label class="control-label">Total Length/Width/Height (
+											<span class="dropdown">
+												<a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">{{dimensionUnit}}</a>
+												<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+													<li><a ng-click="setDimensionsUnit('cm')">cm</a></li>
+													<li><a ng-click="setDimensionsUnit('in')">in</a></li>
+												</ul>
+											</span>
+											)</label>
+										<div class="form-control dimension-fields">
+											<input placeholder="L" class="dimension-inputs" ng-model="dimensions.length" type="number"/>
+											<input placeholder="W" class="dimension-inputs" ng-model="dimensions.width" type="number"/>
+											<input placeholder="H" class="dimension-inputs" ng-model="dimensions.height" type="number"/>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label">Weight
+										(
+											<span class="dropdown">
+												<a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">{{weightUnit}}</a>
+												<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+													<li><a ng-click="setWeightUnit('kg')">kg</a></li>
+													<li><a ng-click="setWeightUnit('lb')">lb</a></li>
+												</ul>
+											</span>
+										)
+										</label>
+										<input class="form-control" ng-model="rawWeight" type="number"/>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="total-load-wrapper">
-						<h2>Summary</h2>
-						<div class="form-group">
-							<label class="control-label">Volume</label>
-							<h2>{{volume()}} cm<sup>3</sup></h2>
-						</div>
-						<div class="form-group">
-							<label class="control-label">Volumetric Weight</label>
-							<h2>{{volumeWeight()}} kg</h2>
-						</div>
-						<div class="form-group">
-							<label class="control-label">Weight</label>
-							<h2>{{weight()}} kg</h2>
+					<div class="quote-card quote-card-blue">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-xs-12">
+									<h2>Summary</h2>
+									<div class="form-group">
+										<label class="control-label">Volume</label>
+										<h2>{{volume()}} cm<sup>3</sup></h2>
+									</div>
+									<div class="form-group">
+										<label class="control-label">Volumetric Weight</label>
+										<h2>{{volumeWeight()}} kg</h2>
+									</div>
+									<div class="form-group">
+										<label class="control-label">Weight</label>
+										<h2>{{weight()}} kg</h2>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div class="submission-wrapper">
+					<div class="quote-card quote-card-green">
 						<button class="btn btn-success form-control" ng-disabled="!canGetQuote()" ng-click="getQuotes()">Get Quotes</button>
 					</div>
 				</div>
-				<div class="mobile-content-wrapper" ng-show="quoteView">
-					<div class="quote-card col-md-12" ng-repeat="operator in quotelist | filter:filterOperatorResults">
+				<div class="mobile-content-wrapper" id="list-view" ng-show="quoteView">
+					<div class="quote-card container-fluid text-center" ng-repeat="operator in quotelist | filter:filterOperatorResults">
+						<div class="row">
+							<div class="col-xs-12">
+								<img class="airline-logo" src="./assets/images/sq.png"/>
+							</div>
+						</div>
 						<div class="row">
 							<div class="col-xs-12">
 								<h4>{{operator.AirlineName}}</h4>
-								<small ng-show="operator.agent != 0"> with {{operator.agent}}</small>
-								<p ng-show="operator.transitAirportCode != '0'">
-									via {{operator.transitCity}}{{(operator.transitCity == operator.transitCountry)?"":", "+operator.transitCountry}}
-									<br/>{{operator.TransitAirportName}} ({{operator.transitAirportCode}})
-								</p>
-								<p ng-show="operator.transitAirportCode == '0'">Direct Flight</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-6 text-left">
+								{{originAirport.City}}
+							</div>
+							<div class="col-xs-6 text-right">
+								{{destinationAirport.City}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-3">
+								<h3>
+									{{originAirport.IATACode}}
+								</h3>
+							</div>
+							<div class="col-xs-6">
+								<div ng-show="operator.transitAirportCode != '0'" class="connector">
+									{{operator.transitCity}}
+								</div>
+								<div ng-show="operator.transitAirportCode != '0'" class="connector-base">
+									{{operator.transitAirportCode}}
+								</div>
+								<div ng-show="operator.transitAirportCode == '0'" class="connector">
+									&nbsp;
+								</div>
+							</div>
+							<div class="col-xs-3">
+								<h3>
+									{{destinationAirport.IATACode}}
+								</h3>
+							</div>
+							<div class="col-xs-12">
+								<hr/>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-xs-3" ng-repeat="(service, quotes) in operator.quotes"  ng-show="quotes.length > 0">
-								<div ng-click="getServiceQuote(operator.RouteID, service)">
+								<div>
 									<h4 class="text-center">{{service}}</h4>
 									<p class="text-center">{{quotes[0]}}</p>
 								</div>
 							</div>	
 						</div>
+						<div class="row">
+							<div class="col-xs-12 text-right">
+								<div class="text-danger">
+									<p>Details <i class="fa fa-chevron-right"></i></p>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="mobile-content-wrapper" ng-show="filterView">
-				<div class="quote-card col-md-12">
+			<div class="mobile-content-wrapper" id="filter-view" ng-show="filterView">
+				<div class="quote-card col-xs-12">
 					<div class="form-group">
 						<label class="control-label">Airlines</label>
 						<select class="form-control" multiple ng-model="airlineFilterList">
@@ -150,7 +215,7 @@
 						</select>
 					</div>
 				</div>
-				<div class="quote-card col-md-12">
+				<div class="quote-card col-xs-12">
 					<div class="form-group">
 						<label class="control-label">Agents</label>
 						<select class="form-control" multiple ng-model="agentFilterList">

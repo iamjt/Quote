@@ -33,31 +33,31 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 	$scope.airlineFilterList = [];
 	$scope.agentFilterList = [];
 
-	// $scope.originAirport = "";
-	// $scope.destinationAirport = "";
-	// $scope.dimensions = {
-	// 	length:"",
-	// 	width:"",
-	// 	height:""
-	// };
-
-	// $scope.rawWeight = 0;
-	// $scope.quantity = 0;
-	// $scope.dimensionUnit = "cm";
-	// $scope.weightUnit = "kg";
-
-	$scope.originAirport = {IATACode:"SIN"};
-	$scope.destinationAirport = {IATACode:"LAX"};
+	$scope.originAirport = "";
+	$scope.destinationAirport = "";
 	$scope.dimensions = {
-		length:120,
-		width:120,
-		height:75
+		length:"",
+		width:"",
+		height:""
 	};
 
-	$scope.rawWeight = 84;
-	$scope.quantity = 2;
+	$scope.rawWeight = 0;
+	$scope.quantity = 0;
 	$scope.dimensionUnit = "cm";
 	$scope.weightUnit = "kg";
+
+	// $scope.originAirport = {IATACode:"SIN"};
+	// $scope.destinationAirport = {IATACode:"LAX"};
+	// $scope.dimensions = {
+	// 	length:120,
+	// 	width:120,
+	// 	height:75
+	// };
+
+	// $scope.rawWeight = 84;
+	// $scope.quantity = 2;
+	// $scope.dimensionUnit = "cm";
+	// $scope.weightUnit = "kg";
 
 	//Returns volume in cm3
 	$scope.volume = function()
@@ -128,6 +128,8 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 				$scope.filterView = true;
 				break;
 		}
+		
+		
 	}
 
 	$scope.newQuote = function()
