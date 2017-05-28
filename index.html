@@ -5,38 +5,46 @@
 		
 		<link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="./lib/font-awesome/css/font-awesome.min.css">
-		<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,400i,700|Dosis:400,400i,700" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="./css/quote-theme.css">
+		<link rel="stylesheet" href="./css/styles.css">
 	</head>
 	<body ng-app="ticapp" ng-cloak>
 		<div ng-controller="QuoteGeneratorController">
-			<div class="container-fluid" ng-show="true">
+			<div class="container-fluid" ng-show="loading">
 				<div class="row">
-					<div class="col-md-12">
-						<div class="text-center" style="margin-top: 25%;">
-							<h3>Starting Application</h3>
-							<h3>
-								Origin Airports
-								<i ng-class="originBuffer()"></i>
-							</h3>
-							<h3>
-								Destination Airports
-								<i ng-class="destinationBuffer()"></i>
-							</h3>
+					<div class="col-md-12 loading-screen">
+						<div class="text-center">
+							<h1>
+								<img width="50%" src="./assets/images/tic-logo.gif"/>
+							</h1>
+						</div>
+						<div class="text-center" ng-show="initiating">
+							<h4>Starting Mobile Rates</h4>
+							<p>
+								Origin Airports <i ng-class="originBuffer()"></i> <br>
+								Destination Airports <i ng-class="destinationBuffer()"></i>
+							</p>
+						</div>
+						<div class="text-center" ng-show="!initiating">
+							<h4>Computing Expected Costs</h4>
+							<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- <div class="container-fluid" ng-show="!loading">
-				<div class="container-fluid mobile-top-toggle-bar">
-					<div class="col-xs-4 text-center mobile-top-toggle" ng-click="newQuote()">
-						<div class="pill">New</div>
+			<div class="container-fluid" ng-show="!loading">
+				<div class="row mobile-nav">
+					<div class="col-xs-4 mobile-nav-item" ng-class="{'active':formView}" ng-click="newQuote()">
+						<div class="mobile-nav-item-content">New</div>
+						<div class="mobile-nav-item-base"></div>
 					</div>
-					<div class="col-xs-4 text-center mobile-top-toggle" ng-class="{'active':quoteView}" ng-show="quoteView||filterView" ng-click="showView('quotes')">
-						<div class="pill">Quotes</div>
+					<div class="col-xs-4 mobile-nav-item" ng-class="{'active':quoteView}" ng-show="quoteView||filterView" ng-click="showView('quotes')">
+						<div class="mobile-nav-item-content">Results</div>
+						<div class="mobile-nav-item-base"></div>
 					</div>
-					<div class="col-xs-4 text-center mobile-top-toggle" ng-show="filterView||quoteView" ng-click="showView('filter')">
-						<div class="pill">Filter Quotes</div>
+					<div class="col-xs-4 mobile-nav-item" ng-class="{'active':filterView}" ng-show="quoteView||filterView" ng-click="showView('filter')">
+						<div class="mobile-nav-item-content">Filter</div>
+						<div class="mobile-nav-item-base"></div>
 					</div>
 				</div>
 				<div class="mobile-content-wrapper" ng-show="formView">
@@ -151,7 +159,7 @@
 					</div>
 				</div>
 			</div>
-		</div> -->
+		</div>
 		<script src="./lib/jquery/jquery.min.js"></script>
 		<script src="./lib/bootstrap/js/bootstrap.min.js"></script>
 		<script src="./lib/angular/angular.min.js"></script>

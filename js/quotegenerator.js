@@ -1,6 +1,7 @@
 app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService", function($scope, Airports, QuoteService){
 
 	$scope.loading = true;
+	$scope.initiating = true;
 
 	$scope.origin = QuoteService.currentOriginObject();
 	$scope.destination = QuoteService.currentDestinationObject();
@@ -225,6 +226,7 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 
 	Airports.initService().then(function(){
 		$scope.loading = false;
+		$scope.initiating = false;
 		clearInterval($scope.loadingTimer);
 	})
 
