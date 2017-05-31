@@ -106,7 +106,7 @@ $app->post('/route-operators/', function($request, $response, $args) {
 
 //Given a route id
 //produces a download link via json
-$app->post('/get-quote/', function($request, $response, $args) {
+$app->post('/get-operator/', function($request, $response, $args) {
 	
 	$routeID = $request->getParsedBody()['routeID'];
 	$parameters = explode("-", $routeID);

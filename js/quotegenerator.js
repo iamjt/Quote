@@ -13,6 +13,7 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 	$scope.airlineList = QuoteService.airlineList();
 	$scope.agentList = QuoteService.agentList();
 	$scope.services = QuoteService.services();
+	$scope.currentOperator = QuoteService.selectedOperator();
 
 	$scope.originBuffer = function(){
 
@@ -145,6 +146,7 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 	$scope.viewRoute = function(operator)
 	{
 		$scope.showView("detail");
+		QuoteService.getOperator(operator);
 	}
 
 	$scope.newQuote = function()
@@ -262,6 +264,7 @@ app.service("QuoteService",["Airports","$http", "$q", function(Airports, $http, 
 	var quotelist = [];
 	var airlineList = [];
 	var agentList = [];
+	var currentOperator = {};
 	var services = ["GEN", "LIV", "PER", "DGR", "XPS", "SXPS"];
 
 	this.currentQuoteList = function()
@@ -294,6 +297,11 @@ app.service("QuoteService",["Airports","$http", "$q", function(Airports, $http, 
 		return services;
 	}
 
+	this.selectedOperator = function()
+	{
+		return currentOperator;
+	}
+
 	//Assign The objects here, these objects should be assigned by the server itself
 	this.getQuotes = function(originCode, destinationCode, loadParameters)
 	{
@@ -318,23 +326,32 @@ app.service("QuoteService",["Airports","$http", "$q", function(Airports, $http, 
 
 			for(var key in response.data.operators)
 			{	
-				var operator = response.data.operators[key];
-				operator.code = key;
+				var newoperator = response.data.operators[key];
+				newoperator.code = key;
 
-				if(operator.AirlineName)
+				if(newoperator.AirlineName)
 				{
-					quotelist.push(operator);
+					quotelist.push(newoperator);
 
-					if(!airlineList.includes(operator.AirlineName))
-						airlineList.push(operator.AirlineName);
+					if(!airlineList.includes(newoperator.AirlineName))
+						airlineList.push(newoperator.AirlineName);
 
-					if(!agentList.includes(operator.agent))
-						agentList.push(operator.agent);
+					if(!agentList.includes(newoperator.agent))
+						agentList.push(newoperator.agent);
 				}
 			}
 		})
 
 		return airlineListPromise;
+	}
+
+	this.getOperator = function(operator)
+	{
+		var data = {
+			routeID:operator.RouteID
+		}
+
+		angular.copy(operator,currentOperator);
 	}
 
 	this.getServiceQuote = function(route, service)

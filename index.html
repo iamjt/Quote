@@ -198,7 +198,7 @@
 							<div class="col-xs-3" ng-repeat="(service, quotes) in operator.quotes"  ng-show="quotes.length > 0">
 								<div>
 									<h4 class="text-center">{{service}}</h4>
-									<p class="text-center">{{quotes[0]}}</p>
+									<p class="text-center">{{quotes[0].toFixed(0)}}</p>
 								</div>
 							</div>	
 						</div>
@@ -217,49 +217,33 @@
 					<div class="row">
 						<div class="col-xs-12 text-center" style="margin-top:30px;">
 							<img src="./assets/images/sq.png"/>
-							<h2>Airline Name</h2>
-							<small>agent name</small>
+							<h2>{{currentOperator.AirlineName}}</h2>
+							<small class="text-danger">{{currentOperator.agent}}</small>
 						</div>
 					</div>
 					<div class="row text-left" style="margin-top:25px">
 						<div class="col-xs-1 col-xs-offset-1"><i class="fa fa-phone text-success"></i></div>
-						<div class="col-xs-9">+65-61234567</div>
+						<div class="col-xs-9">+65-61234567 (Agent's Number)</div>
 					</div>
 					<div class="row text-left" style="margin-top:5px">
 						<div class="col-xs-1 col-xs-offset-1"><i class="fa fa-envelope text-info"></i></div>
-						<div class="col-xs-9">demo.email@example.com</div>
+						<div class="col-xs-9">demo.email@example.com (Agent's Contact email)</div>
 					</div>
 					<div class="row text-left" style="margin-top:5px">
 						<h3 class="col-xs-12 text-center">Computed Rates</h3>
+						<div class="col-xs-12"><p class='text-info'>This is a list of rates computed based on the tables</p></div>
 					</div>
 					<div class="row text-left" style="margin-top:5px">
-						<div class="col-xs-3">
-							<h4 class="text-center">GEN</h4>
-							<p class="text-center">12345</p>
-						</div>
-						<div class="col-xs-3">
-							<h4 class="text-center">GEN</h4>
-							<p class="text-center">12345</p>
-						</div>
-						<div class="col-xs-3">
-							<h4 class="text-center">GEN</h4>
-							<p class="text-center">12345</p>
-						</div>
-						<div class="col-xs-3">
-							<h4 class="text-center">GEN</h4>
-							<p class="text-center">12345</p>
-						</div>
-						<div class="col-xs-3">
-							<h4 class="text-center">GEN</h4>
-							<p class="text-center">12345</p>
-						</div>
-						<div class="col-xs-3">
-							<h4 class="text-center">GEN</h4>
-							<p class="text-center">12345</p>
+						<div class="col-xs-3" ng-repeat="(service, quotes) in currentOperator.quotes"  ng-show="quotes.length > 0">
+							<div>
+								<h4 class="text-center">{{service}}</h4>
+								<p class="text-center">{{quotes[0].toFixed(0)}}</p>
+							</div>
 						</div>
 					</div>
 					<div class="row text-left" style="margin-top:5px">
 						<h3 class="col-xs-12 text-center">Surcharges</h3>
+						<div class="col-xs-12"><p>List of Surcharges like FSC and AWBs - can be listed and computed here</p></div>
 					</div>
 				</div>
 			</div>
