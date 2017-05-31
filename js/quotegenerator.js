@@ -46,8 +46,8 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 	$scope.dimensionUnit = "cm";
 	$scope.weightUnit = "kg";
 
-	// $scope.originAirport = {IATACode:"SIN"};
-	// $scope.destinationAirport = {IATACode:"LAX"};
+	// $scope.originAirport = {"AirportName":"Singapore Changi","City":"Singapore","Country":"Singapore","ISOCode":"SG","IATACode":"SIN"}
+	// $scope.destinationAirport = {"AirportName":"Los Angeles International","City":"Los Angeles","Country":"United States","ISOCode":"US","IATACode":"LAX"}
 	// $scope.dimensions = {
 	// 	length:120,
 	// 	width:120,
@@ -107,6 +107,7 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 	$scope.formView = true;
 	$scope.quoteView = false;
 	$scope.filterView = false;
+	$scope.detailView = false;
 
 	$scope.showView = function(view)
 	{
@@ -116,20 +117,34 @@ app.controller("QuoteGeneratorController",["$scope", "Airports", "QuoteService",
 				$scope.formView = true;
 				$scope.quoteView = false;
 				$scope.filterView = false;
+				$scope.detailView = false;
 				break;
 			case "quotes":
 				$scope.formView = false;
 				$scope.quoteView = true;
 				$scope.filterView = false;
+				$scope.detailView = false;
 				break;
 			case "filter":
 				$scope.formView = false;
 				$scope.quoteView = false;
 				$scope.filterView = true;
+				$scope.detailView = false;
+				break;
+			case "detail":
+				$scope.formView = false;
+				$scope.quoteView = false;
+				$scope.filterView = false;
+				$scope.detailView = true;
 				break;
 		}
 		
-		
+
+	}
+
+	$scope.viewRoute = function(operator)
+	{
+		$scope.showView("detail");
 	}
 
 	$scope.newQuote = function()
