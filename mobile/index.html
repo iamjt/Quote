@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width">
-		<link rel="shortcut icon" href="favicon.ico">
+		<link rel="shortcut icon" href="../favicon.ico">
 		
 		<link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="../lib/font-awesome/css/font-awesome.min.css">
@@ -15,7 +15,7 @@
 					<div class="col-xs-12 loading-screen">
 						<div class="text-center">
 							<h1>
-								<img width="50%" src="./assets/images/tic-logo.gif"/>
+								<img width="50%" src="../assets/images/tic-logo.gif"/>
 							</h1>
 						</div>
 						<div class="text-center" ng-show="initiating">
@@ -54,7 +54,7 @@
 					</div>
 				</div>
 				<div class="mobile-content-wrapper" id="form-view" ng-show="formView">
-					<div class="quote-card quote-card-green">
+					<div class="quote-card">
 						<div class="container-fluid">
 							<div class="row">
 								<div class="col-xs-12">
@@ -80,7 +80,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="quote-card quote-card-yellow">
+					<div class="quote-card">
 						<div class="container-fluid">
 							<div class="row">
 								<div class="col-xs-12">
@@ -123,7 +123,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="quote-card quote-card-blue">
+					<div class="quote-card">
 						<div class="container-fluid">
 							<div class="row">
 								<div class="col-xs-12">
@@ -144,15 +144,15 @@
 							</div>
 						</div>
 					</div>
-					<div class="quote-card quote-card-green">
-						<button class="btn btn-success form-control" ng-disabled="!canGetQuote()" ng-click="getQuotes()">Get Quotes</button>
+					<div class="quote-card">
+						<button class="btn btn-danger form-control" ng-disabled="!canGetQuote()" ng-click="getQuotes()">Get Quotes</button>
 					</div>
 				</div>
 				<div class="mobile-content-wrapper" id="list-view" ng-show="quoteView">
 					<div class="quote-card container-fluid text-center" ng-repeat="operator in quotelist | filter:filterOperatorResults">
 						<div class="row">
 							<div class="col-xs-12">
-								<img class="airline-logo" src="./assets/images/sq.png"/>
+								<img class="airline-logo" src="../assets/images/sq.png"/>
 							</div>
 						</div>
 						<div class="row">
@@ -216,7 +216,7 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-xs-12 text-center" style="margin-top:30px;">
-							<img src="./assets/images/sq.png"/>
+							<img src="../assets/images/sq.png"/>
 							<h2>{{currentOperator.AirlineName}}</h2>
 							<small class="text-danger">{{currentOperator.agent}}</small>
 						</div>
@@ -283,10 +283,7 @@
 		<script src="../lib/ui-bootstrap/ui-bootstrap.min.js"></script>
 
 		<script src="./js/main.js"></script>
-		<script src="./js/airlinedirectory.js"></script>
 		<script src="./js/quotegenerator.js"></script>
-		<script src="./js/datamanager.js"></script>
 		<script src="./js/countries.js"></script>
-		<script src="./js/airline.js"></script>
 	</body>
 </html>

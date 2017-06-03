@@ -81,12 +81,28 @@ hr
 	border: 1px solid #ddd;
 }
 
+*::-webkit-scrollbar {
+	width: 6px !important;
+	height: 6px !important;
+}
+ 
+*::-webkit-scrollbar-track {
+	background: rgba(255,255,255,0.08);
+}
+ 
+*::-webkit-scrollbar-thumb {
+	background-color: rgba(0,0,0,0.2);
+}
+
 .dropdown-menu {
 	min-width: 60px !important;
+	border-radius: 4px;
 }
 
 .form-group > .dropdown-menu {
-	max-width: 100%;
+	max-width: 90%;
+	border-radius: 4px;
+	padding: 0px;
 }
 
 .form-group > .dropdown-menu li
@@ -101,4 +117,69 @@ hr
 
 .ng-hide.ng-hide-animate{
 	display: none !important;
+}
+
+input, textarea, .form-control
+{
+	border-top:none;
+	border-left:none;
+	border-right:none;
+/*	border-bottom:1px solid #888;*/
+	background-color: #FFF5BD;
+
+	border-radius: 2px;
+
+	transition: all 0.2s ease-in-out;
+}
+
+input:active, input:focus, textarea:focus, text-area:active, .form-control:focus, .form-control:active
+{
+	outline:none !important;
+	outline-width:0px !important;
+	box-shadow: none;
+	border-bottom: 3px solid #C0392B;
+
+	transition: all 0.2s ease-in-out;
+}
+
+.quote-card
+{
+	margin:5px 7.5px;
+	margin-top: 35px;
+	background-color: #fff;
+	border-radius: 4px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.quote-card h2, .quote-card h3, .quote-card > a
+{
+	color: #C0392B;
+}
+
+.quote-card-blue
+{
+	background-color: #77A7FB;
+	color: #FFF !important;
+}
+
+.quote-card-red
+{
+	background-color: #E57368;
+}
+
+.quote-card-green
+{
+	background-color: #3BCF8B;
+	color: #FFF !important;
+}
+
+.quote-card-yellow
+{
+	background-color: #FBE473;
+}
+
+.quote-card-purple
+{
+	background-color: #E1A3E5;
+	color: #FFF !important;
 }

@@ -1,0 +1,48 @@
+.quote-card
+{
+	margin:5px 7.5px;
+	margin-top: 35px;
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.quote-card-blue
+{
+	background-color: #77A7FB;
+	color: #FFF !important;
+}
+
+.quote-card-red
+{
+	background-color: #E57368;
+}
+
+.quote-card-green
+{
+	background-color: #3BCF8B;
+	color: #FFF !important;
+}
+
+.quote-card-yellow
+{
+	background-color: #FBE473;
+}
+
+.quote-card-purple
+{
+	background-color: #E1A3E5;
+	color: #FFF !important;
+}
+
+.connector
+{
+	margin-top: 10px;
+	padding-bottom: 3px;
+	border-bottom: 2px solid #E57368;
+}
+
+.connector-base
+{
+	margin-top: 3px;
+}
