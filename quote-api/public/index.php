@@ -44,6 +44,7 @@ require __DIR__ . '/../src/middleware.php';
 require __DIR__ . '/../src/routes.php';
 
 //Helper functions
+require __DIR__ . '/../src/airlines.php';
 require __DIR__ . '/../src/airports.php';
 require __DIR__ . '/../src/quote.php';
 require __DIR__ . '/../src/authentication.php';
