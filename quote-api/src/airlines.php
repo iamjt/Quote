@@ -2,7 +2,8 @@
 	
 	function getAllAirlines($connection)
 	{	
-		$stmt = $connection -> prepare("SELECT * FROM `airlines` where `IATADesignator` in (SELECT DISTINCT `IATADesignator` from `airlines`)");
+		$stmt = $connection -> prepare("SELECT * FROM `airlines` where `IATADesignator` in (SELECT DISTINCT `Airline` from `routes`)");
+		$stmt2 = $connection -> prepare("SELECT `RegionCode` FROM `countries` where `CountryName` = ?");
 		$stmt->execute();
 
 		$result = $stmt->get_result();
@@ -11,6 +12,11 @@
 
 		while($airline = $result->fetch_assoc())
 		{
+			$stmt2 -> bind_param("s", $airline["Country"]);
+			$stmt2 -> execute();
+			$result2 = $stmt2 -> get_result();
+
+			$airline["RegionCode"] = $result2 -> fetch_assoc()["RegionCode"];
 			$output[] = $airline;
 		}
 

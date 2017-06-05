@@ -18,7 +18,7 @@ app.service("directoryservice", ["$http",function($http){
 
 	this.getAirlines = function(){
 
-		return $http.get(server+"airlines").then(function(response){
+		$http.get(server+"airlines").then(function(response){
 
 			if(response.status == 200)
 			{	
@@ -28,6 +28,14 @@ app.service("directoryservice", ["$http",function($http){
 
 			console.log(airlines);
 		})
+	}
+
+	//Return all airline data related to this airline
+	//Surcharges
+	//Rates for each region
+	this.getAirlineData = function(IATADesignator)
+	{
+
 	}
 
 }])
