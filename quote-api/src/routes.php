@@ -2,13 +2,12 @@
 // Routes
 
 $app->get('/', function ($request, $response, $args) {
-
 	// Render index view
 	return $this->renderer->render($response, '403.phtml', $args);
 });
 
 $app->get('/login', function($request, $response, $args) {
-
+	echo "login";
 });
 
 $app->get('/new-user', function($request, $response, $args) {
@@ -142,6 +141,25 @@ $app->post('/get-operator/', function($request, $response, $args) {
 	$output["origin"] = $origin;
 	$output["destination"] = $destination;
 	$output["quotes"] = $quotes;
+
+	$response
+	->withStatus(200)
+	->withHeader('Content-Type', 'application/json')
+	->write(json_encode($output));
+});
+
+$app->get("/airline-detailed/{code}", function($request, $response, $args) {
+		
+	$connection = connectToDB();
+
+	$airlineCode = $request->getAttribute('code');
+
+	$airlineProfile = getAirlineByCode($connection, $airlineCode);
+	$agents = getAirlineAgentRoutes($connection, $airlineCode);
+
+	$output = array();
+	$output['profile'] = $airlineProfile;
+	$output['agents'] = $agents;
 
 	$response
 	->withStatus(200)

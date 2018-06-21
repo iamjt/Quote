@@ -85,7 +85,9 @@ app.service("Airports", ["$http",function($http){
 		return $http.get(server+"airports").then(function(response){
 
 			if(response.status == 200)
-			{	
+			{
+				console.log(response.data)
+
 				angular.copy([],originCountries);
 				angular.copy(uniqueCountryList(response.data.originAirports), originCountries);
 
